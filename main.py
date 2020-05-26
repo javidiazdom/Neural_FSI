@@ -25,7 +25,7 @@ train_datagen = ImageDataGenerator(
 train_generator = train_datagen.flow_from_directory(
     "./Training",
     target_size=(288,162),
-    batch_size= 80,
+    batch_size= 400,
     class_mode='categorical'
 )
 
@@ -42,19 +42,16 @@ validation_datagen = ImageDataGenerator(
 validation_generator = validation_datagen.flow_from_directory(
     "./Validation",
     target_size=(288,162),
-    batch_size=40,
+    batch_size=300,
     class_mode='categorical'
 )
 
 model = Sequential()
 
-model.add(Conv2D(32, kernel_size=(2,2), activation='relu', input_shape=(288,162,3)))
+model.add(Conv2D(32, kernel_size=(3,3), activation='relu', input_shape=(288,162,3)))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
-model.add(Conv2D(32, (2,2), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2,2)))
-
-model.add(Conv2D(64,(2,2), activation='relu'))
+model.add(Conv2D(32, (3,3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 model.add(Dropout(0.25))
@@ -65,15 +62,15 @@ model.add(Dense(4, activation='softmax'))
 
 model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adadelta(), metrics=['accuracy'])
 
-epochs =  80
+epochs =  140
 
 es = EarlyStopping(monitor='val_accuracy', mode='max', verbose=1, patience=10, restore_best_weights=True)
 
 model.fit_generator(
     train_generator,
     epochs=epochs,
-    validation_data=validation_generator,
-    callbacks=[es]
+    validation_data=validation_generator
+    #callbacks=[es]
 )
 
 model.save("modelo.h5")

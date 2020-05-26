@@ -10,7 +10,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 model = keras.models.load_model("modelo.h5")
 
-pil_im = Image.open('./Validation/Tazas/IMG_20200524_130615_1.jpg','r')
+pil_im = Image.open('./Training/Platos/IMG_20200524_131112.jpg','r')
 im = np.asarray(pil_im.resize((162,288)))
 plt.imshow(im)
 print(im.shape)
