@@ -4,13 +4,13 @@ from PIL import Image
 import keras
 import os
 
-labels =['Cubierto', 'Libro', 'Plato','Taza']
+labels =['Cubierto', 'Destornillador', 'Libro','Taza','Zapato']
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 model = keras.models.load_model("modelo.h5")
 
-pil_im = Image.open('./Training/Platos/IMG_20200524_131112.jpg','r')
+pil_im = Image.open('./Training/Cubiertos/IMG_20200524_132000_1.jpg','r')
 im = np.asarray(pil_im.resize((162,288)))
 plt.imshow(im)
 print(im.shape)
